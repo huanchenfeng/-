@@ -17,7 +17,8 @@ public class GlobalExceptionhandler {
     public R<String> exceptionHandler(SQLIntegrityConstraintViolationException ex){
         if(ex.getMessage().contains("Duplicate entry")){
             String[] split=ex.getMessage().split(" ");
-            R.error(split[2]+"已存在");
+           return R.error(split[2]+"已存在");
+
         };
         return R.error("未知错误");
     }

@@ -34,23 +34,22 @@ public class LoginCheckFilter implements Filter {
         //判断是否需要处理
         if (check){
             filterChain.doFilter(request,response);
-            log.info("直接放行的:{}",request.getRequestURI());
+
             return;
         }
         //是否登录成功
         if (request.getSession().getAttribute("employee")!=null){
             filterChain.doFilter(request,response);
-            log.info("登陆成功的{}",request.getSession().getAttribute("employee"));
+
             return;
         }
         response.getWriter().write(JSON.toJSONString(R.error("NOTLOGIN")));
-        log.info("被拦截{}",request.getRequestURI());
+
         return;
     }
     public boolean check (String[] urls,String requestURI){
         for (String url : urls) {
             if(PATH_MATCHER.match(url,requestURI)){
-                log.info("匹配上了");
                 return true;
             }
         }
