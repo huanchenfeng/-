@@ -1,6 +1,7 @@
 package com.meng.reggie.filter;
 
 import com.alibaba.fastjson.JSON;
+import com.meng.reggie.common.BaseContext;
 import com.meng.reggie.common.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.AntPathMatcher;
@@ -39,8 +40,11 @@ public class LoginCheckFilter implements Filter {
         }
         //是否登录成功
         if (request.getSession().getAttribute("employee")!=null){
+            long id=Thread.currentThread().getId();
+            log.info("线程id为:{}",id);
+            Long empID =(Long) request.getSession().getAttribute("employee");
+            BaseContext.setCurrentId(empID);
             filterChain.doFilter(request,response);
-
             return;
         }
         response.getWriter().write(JSON.toJSONString(R.error("NOTLOGIN")));
