@@ -22,4 +22,11 @@ public class GlobalExceptionhandler {
         };
         return R.error("未知错误");
     }
+
+
+    @ExceptionHandler(CustException.class)
+    public R<String> exceptionHandler(CustException ex){
+
+        return R.error(ex.getMessage());
+    }
 }

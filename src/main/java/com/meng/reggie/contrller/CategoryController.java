@@ -28,7 +28,7 @@ public class CategoryController {
     public R<Page> page(int page, int pageSize){
         log.info("page={},pageSize={}",page,pageSize);
         //分页构造器
-        Page pageInfo=new Page(page,pageSize);
+        Page<Category> pageInfo=new Page<>(page,pageSize);
         //条件构造器
         LambdaQueryWrapper<Category> queryWrapper=new LambdaQueryWrapper<>();
         //添加排序
@@ -36,5 +36,11 @@ public class CategoryController {
         //执行查询
         categoryService.page(pageInfo,queryWrapper);
         return R.success(pageInfo);
+    }
+    @DeleteMapping
+    public R<String> delete (Long ids){
+        //删除操作
+        categoryService.remove(ids);
+        return R.success("删除成功");
     }
 }
